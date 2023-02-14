@@ -113,7 +113,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         chmod -x compile.sh
-	    	bash compile.sh
+	bash compile.sh
 
     - name: Make Anykernel for your kernel
       run: |
@@ -123,9 +123,9 @@ jobs:
         sed -i 's!block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!block=auto;!g' AnyKernel3/anykernel.sh
         sed -i 's/is_slot_device=0;/is_slot_device=auto;/g' AnyKernel3/anykernel.sh
         cp android-kernel/out/outputs/x3pro/Image.gz AnyKernel3/
-		    cp android-kernel/out/outputs/x3pro/dtb AnyKernel3/
-    		cp android-kernel/out/outputs/x3pro/dtbo.img AnyKernel3/
-    		cp android-kernel/out/outputs/dtbo-miui.img AnyKernel3/
+	cp android-kernel/out/outputs/x3pro/dtb AnyKernel3/
+	cp android-kernel/out/outputs/x3pro/dtbo.img AnyKernel3/
+	cp android-kernel/out/outputs/dtbo-miui.img AnyKernel3/
         rm -rf AnyKernel3/.git* AnyKernel3/README.md
 
     - name: Upload AnyKernel3
