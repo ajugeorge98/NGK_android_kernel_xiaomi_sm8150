@@ -1,4 +1,4 @@
-name: Build Kernel VAYU 4.14
+name: Build Kernel
 on:
   watch:
     types: [started]
