@@ -10,7 +10,7 @@ LINKER="lld"
 COMPILERDIR="/media/pierre/Expension/Android/PocoX3Pro/Kernels/Proton-Clang"
 
 # Cleanup output
-rm -rf out/outputs/${PHONE}/*
+rm -rf out/outputs/x3pro/*
 
 # Export shits
 export KBUILD_BUILD_USER=Pierre2324
@@ -93,10 +93,10 @@ then
 else
     echo "Build succesful"
     mkdir out/outputs
-    mkdir out/outputs/${PHONE}
-    find out/arch/arm64/boot/dts/qcom/ -name '*.dtb' -exec cat {} + >out/outputs/${PHONE}/dtb
-    cp out/arch/arm64/boot/dtbo.img out/outputs/${PHONE}/dtbo.img
-    cp out/arch/arm64/boot/Image.gz out/outputs/${PHONE}/Image.gz
+    mkdir out/outputs/x3pro
+    find out/arch/arm64/boot/dts/qcom/ -name '*.dtb' -exec cat {} + >out/outputs/x3pro/dtb
+    cp out/arch/arm64/boot/dtbo.img out/outputs/x3pro/dtbo.img
+    cp out/arch/arm64/boot/Image.gz out/outputs/x3pro/Image.gz
     #MIUI dtbo
     rm out/outputs/dtbo-miui.img
     miui_fix_dimens
