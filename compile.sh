@@ -1,20 +1,18 @@
 #!/bin/sh
 
 # Some general variables
-PHONE="x3pro"
 ARCH="arm64"
 SUBARCH="arm64"
 DEFCONFIG=nogravity_defconfig
 COMPILER=clang
 LINKER="lld"
-COMPILERDIR="/media/pierre/Expension/Android/PocoX3Pro/Kernels/Proton-Clang"
 
 # Cleanup output
 rm -rf out/outputs/x3pro/*
 
 # Export shits
-export KBUILD_BUILD_USER=Pierre2324
-export KBUILD_BUILD_HOST=G7-7588
+export KBUILD_BUILD_USER=Ghost
+export KBUILD_BUILD_HOST=github
 
 # Speed up build process
 MAKE="./makeparallel"
@@ -28,23 +26,25 @@ red='\033[0;31m'
 nocol='\033[0m'
 
 Build () {
-PATH="${COMPILERDIR}/bin:${PATH}" \
+PATH="$GITHUB_WORKSPACE/kernel_workspace/tools/clang/host/linux-x86/clang-r428724/bin:${PATH}" \
 make -j$(nproc --all) O=out \
 ARCH=${ARCH} \
 CC=${COMPILER} \
-CROSS_COMPILE=${COMPILERDIR}/bin/aarch64-linux-gnu- \
-CROSS_COMPILE_ARM32=${COMPILERDIR}/bin/arm-linux-gnueabi- \
-LD_LIBRARY_PATH=${COMPILERDIR}/lib \
+CLANG_TRIPLE=aarch64-linux-gnu- \
+CROSS_COMPILE=$GITHUB_WORKSPACE/kernel_workspace/tools/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-gnu- \
+CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/kernel_workspace/tools/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin/arm-linux-gnueabi- \
+LD_LIBRARY_PATH=$GITHUB_WORKSPACE/kernel_workspace/tools/clang/host/linux-x86/clang-r428724/lib64 \
 Image.gz-dtb dtbo.img
 }
 
 Build_lld () {
-PATH="${COMPILERDIR}/bin:${PATH}" \
+PATH="$GITHUB_WORKSPACE/kernel_workspace/tools/clang/host/linux-x86/clang-r428724/bin:${PATH}" \
 make -j$(nproc --all) O=out \
 ARCH=${ARCH} \
 CC=${COMPILER} \
-CROSS_COMPILE=${COMPILERDIR}/bin/aarch64-linux-gnu- \
-CROSS_COMPILE_ARM32=${COMPILERDIR}/bin/arm-linux-gnueabi- \
+CLANG_TRIPLE=aarch64-linux-gnu- \
+CROSS_COMPILE=$GITHUB_WORKSPACE/kernel_workspace/tools/clang/host/linux-x86/clang-r428724/bin/aarch64-linux-gnu- \
+CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/kernel_workspace/tools/clang/host/linux-x86/clang-r428724/bin/arm-linux-gnueabi- \
 LD=ld.${LINKER} \
 AR=llvm-ar \
 NM=llvm-nm \
@@ -52,7 +52,7 @@ OBJCOPY=llvm-objcopy \
 OBJDUMP=llvm-objdump \
 STRIP=llvm-strip \
 ld-name=${LINKER} \
-KBUILD_COMPILER_STRING="Proton-Clang" \
+KBUILD_COMPILER_STRING="r428724" \
 Image.gz-dtb dtbo.img
 }
 
